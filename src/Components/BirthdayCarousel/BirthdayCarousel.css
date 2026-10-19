@@ -1,0 +1,395 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Sans+KR:wght@500;700&family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap');
+
+.carousel-page {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Pacifico", cursive;
+  background: #120320;
+  perspective: 1000px;
+  touch-action: none;
+  position: relative;
+}
+
+/* Background Canvas */
+#birthday-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Floating Festive Balloons */
+.balloons-container {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.balloon {
+  position: absolute;
+  bottom: -150px;
+  width: 44px;
+  height: 56px;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  box-shadow: inset -5px -5px 12px rgba(0, 0, 0, 0.18), inset 6px 6px 12px rgba(255, 255, 255, 0.4), 0 8px 18px rgba(0, 0, 0, 0.35);
+  animation: floatUpward linear infinite;
+  opacity: 0.85;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.2s ease;
+}
+
+.balloon:hover {
+  transform: scale(1.18);
+}
+
+.balloon::before {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 5px;
+  background: inherit;
+  border-radius: 2px;
+}
+
+.balloon::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 1px;
+  height: 65px;
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateX(-50%);
+}
+
+@keyframes floatUpward {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.85;
+  }
+  90% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-120vh) rotate(15deg);
+    opacity: 0;
+  }
+}
+
+/* Clean Top Header */
+.carousel-header {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  text-align: center;
+  pointer-events: none;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.birthday-main-title {
+  font-family: "Pacifico", cursive;
+  font-size: 38px;
+  font-weight: 500;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 20%, #ffd166 60%, #ffa200 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(255, 209, 102, 0.45));
+  letter-spacing: 1px;
+}
+
+/* Perfect Viewport Anchor: Ensures 3D carousel stays dead center of the screen */
+.carousel-viewport {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 170px;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* 3D Drag & Spin Containers */
+#drag-container {
+  position: relative;
+  width: 120px;
+  height: 170px;
+  transform-style: preserve-3d;
+  transform: rotateX(-10deg);
+  pointer-events: auto;
+}
+
+#spin-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 170px;
+  transform-style: preserve-3d;
+}
+
+#drag-container img {
+  transform-style: preserve-3d;
+  position: absolute;
+  left: 0;
+  top: 0;
+  object-fit: cover;
+  width: 120px;
+  height: 170px;
+  background-position: center;
+  background-size: cover;
+  border: 4px solid #fff;
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.7), 0 8px 18px rgba(0, 0, 0, 0.45);
+  -webkit-box-reflect: below 10px linear-gradient(transparent, transparent 60%, rgba(0, 0, 0, 0.3));
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+#drag-container img:hover {
+  box-shadow: 0 0 24px #ffffff, 0 10px 25px rgba(255, 209, 102, 0.6);
+  filter: brightness(1.08);
+}
+
+#ground {
+  width: 800px;
+  height: 800px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateX(90deg);
+  background: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.15), transparent);
+  pointer-events: none;
+}
+
+/* Floating interactive message button */
+.envelope-btn {
+  width: 80px;
+  height: 80px;
+  background: url('/images/Message.png') no-repeat center;
+  background-size: contain;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  z-index: 25;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: floatMsg 4s ease-in-out infinite alternate;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+}
+
+.envelope-btn:hover {
+  transform: scale(1.2) rotate(-5deg);
+}
+
+@keyframes floatMsg {
+  0% { transform: translateY(0px) rotate(-3deg); }
+  100% { transform: translateY(-10px) rotate(3deg); }
+}
+
+/* Friendly Birthday Wish Modal when clicking envelope */
+.wish-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(10, 3, 20, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: modalFadeIn 0.3s ease forwards;
+}
+
+.wish-modal-card {
+  position: relative;
+  background: rgba(30, 10, 50, 0.9);
+  border: 1px solid rgba(255, 209, 102, 0.3);
+  border-radius: 24px;
+  padding: 32px 28px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 209, 102, 0.2);
+}
+
+.wish-modal-emoji {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.wish-modal-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 26px;
+  color: #ffd166;
+  margin: 0 0 12px;
+}
+
+.wish-modal-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 24px;
+}
+
+.wish-modal-close-btn {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ffd166, #ff9e00);
+  color: #1a0b2e;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.wish-modal-close-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Bottom CTA to start music */
+.start-music-btn-container {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+.start-music-btn {
+  font-family: 'Poppins', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 36px;
+  background: linear-gradient(135deg, #7b2cbf 0%, #3a86ff 100%);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(58, 134, 255, 0.35), 0 0 20px rgba(123, 44, 191, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.start-music-btn:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 14px 30px rgba(58, 134, 255, 0.5), 0 0 25px rgba(123, 44, 191, 0.4);
+}
+
+.start-music-btn:active {
+  transform: scale(0.98);
+}
+
+/* Keyframes for auto-spin */
+@keyframes spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+@keyframes spinRevert {
+  from { transform: rotateY(360deg); }
+  to { transform: rotateY(0deg); }
+}
+
+@media screen and (max-width: 658px) {
+  .carousel-header {
+    top: max(14px, env(safe-area-inset-top, 14px));
+    padding: 0 54px;
+  }
+  .birthday-main-title {
+    font-size: 22px;
+  }
+  .envelope-btn {
+    top: max(12px, env(safe-area-inset-top, 12px));
+    right: 14px;
+    left: auto;
+    width: 44px;
+    height: 44px;
+  }
+  .carousel-viewport {
+    width: 72px;
+    height: 105px;
+    top: 36%;
+  }
+  #drag-container {
+    width: 72px;
+    height: 105px;
+  }
+  #spin-container {
+    width: 72px;
+    height: 105px;
+  }
+  #drag-container img {
+    width: 72px;
+    height: 105px;
+    border-radius: 14px;
+    border-width: 2.5px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.65), 0 6px 14px rgba(0, 0, 0, 0.4);
+    -webkit-box-reflect: below 6px linear-gradient(transparent, transparent 65%, rgba(0, 0, 0, 0.25));
+  }
+  #ground {
+    width: 420px;
+    height: 420px;
+  }
+  .start-music-btn-container {
+    position: fixed;
+    bottom: calc(18px + env(safe-area-inset-bottom, 12px));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+  }
+  .start-music-btn {
+    font-size: 14px;
+    padding: 12px 28px;
+    box-shadow: 0 8px 24px rgba(58, 134, 255, 0.4), 0 0 16px rgba(123, 44, 191, 0.3);
+  }
+  .balloon {
+    width: 32px;
+    height: 42px;
+  }
+}

@@ -1,0 +1,191 @@
+/* Standalone Birthday Candle Styles (Bottom of Screen) */
+
+.bottom-candle-container {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 28;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Candle Ambient Light Glow (Removed when blown out!) */
+.candle-ambient-glow {
+  position: absolute;
+  top: -30px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 200, 80, 0.35) 0%, rgba(255, 120, 30, 0.15) 50%, transparent 75%);
+  pointer-events: none;
+  animation: glowPulse 2.5s infinite alternate ease-in-out;
+  transition: opacity 0.5s ease;
+}
+
+@keyframes glowPulse {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(1.15); opacity: 1; }
+}
+
+/* Candle Structure (Sleek Birthday Candle) */
+.candle-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.candle-wrapper:hover {
+  transform: scale(1.1);
+}
+
+/* Flame (Active vs Blown Out) */
+.candle-flame-container {
+  position: relative;
+  width: 24px;
+  height: 34px;
+  margin-bottom: 2px;
+}
+
+.candle-flame {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(-45deg);
+  width: 22px;
+  height: 22px;
+  border-radius: 80% 15% 55% 50% / 55% 15% 80% 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #ffd166 30%, #f59e0b 65%, #ef4444 100%);
+  box-shadow: 0 0 16px rgba(255, 209, 102, 0.95), 0 0 32px rgba(245, 158, 11, 0.75);
+  animation: flameDancing 0.38s infinite alternate ease-in-out;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+@keyframes flameDancing {
+  0% { transform: translateX(-50%) rotate(-46deg) scale(0.96); }
+  50% { transform: translateX(-50%) rotate(-43deg) scale(1.05); }
+  100% { transform: translateX(-50%) rotate(-45deg) scale(1.1); }
+}
+
+/* Smoke Trails when light is removed / blown out */
+.candle-smoke {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: rgba(220, 220, 220, 0.8);
+  border-radius: 50%;
+  filter: blur(2px);
+  animation: smokeRise 1.6s ease-out forwards;
+}
+
+@keyframes smokeRise {
+  0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.9; }
+  100% { transform: translateX(-50%) translateY(-45px) scale(4); opacity: 0; }
+}
+
+/* Candle Wick */
+.candle-wick {
+  width: 2.5px;
+  height: 8px;
+  background: #2a2a2a;
+  border-radius: 1px;
+}
+
+/* Striped Candle Pillar */
+.candle-body {
+  width: 18px;
+  height: 48px;
+  background: repeating-linear-gradient(
+    45deg,
+    #ffd166,
+    #ffd166 6px,
+    #ff70a6 6px,
+    #ff70a6 12px,
+    #38bdf8 12px,
+    #38bdf8 18px
+  );
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 2px 0 4px rgba(255, 255, 255, 0.5), inset -2px 0 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Status Hint & Wish Granted */
+.candle-hint {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  color: #ffd166;
+  background: rgba(18, 3, 32, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 209, 102, 0.35);
+  padding: 4px 14px;
+  border-radius: 100px;
+  margin-top: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  white-space: nowrap;
+  animation: hintBlink 2.2s infinite alternate;
+}
+
+@keyframes hintBlink {
+  0% { opacity: 0.85; transform: scale(0.98); }
+  100% { opacity: 1; transform: scale(1.02); }
+}
+
+.candle-wish-granted {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #06d6a0;
+  background: rgba(6, 214, 160, 0.16);
+  border: 1px solid rgba(6, 214, 160, 0.45);
+  padding: 5px 16px;
+  border-radius: 100px;
+  margin-top: 8px;
+  text-shadow: 0 0 10px rgba(6, 214, 160, 0.6);
+  white-space: nowrap;
+  animation: wishBannerPop 0.4s ease forwards;
+}
+
+@keyframes wishBannerPop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 658px) {
+  .bottom-candle-container {
+    bottom: calc(76px + env(safe-area-inset-bottom, 12px));
+    z-index: 50;
+  }
+  .candle-ambient-glow {
+    width: 100px;
+    height: 100px;
+    top: -20px;
+  }
+  .candle-body {
+    width: 14px;
+    height: 36px;
+  }
+  .candle-flame-container {
+    height: 28px;
+    margin-bottom: 1px;
+  }
+  .candle-flame {
+    width: 16px;
+    height: 16px;
+  }
+  .candle-hint,
+  .candle-wish-granted {
+    font-size: 10.5px;
+    padding: 3px 12px;
+    margin-top: 6px;
+  }
+}
